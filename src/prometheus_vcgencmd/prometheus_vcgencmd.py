@@ -29,6 +29,11 @@ class Prometheus_Vcgencmd:
         promList=[]
 
         #-------------------------------------------------------------------------------------
+
+        prom = 'vcgencmd_info{version="'+str(__version__)+'"} 1'
+        promList.append(prom)
+
+        #-------------------------------------------------------------------------------------
         #vcgencmd version
 
         vcgencmd_version = self.runcmd('vcgencmd version').rstrip('\n').splitlines()
