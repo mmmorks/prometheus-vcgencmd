@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__='0.0.0-2'
+__version__='0.0.0-3'
 
 import sys
 import subprocess
@@ -19,16 +19,16 @@ class Prometheus_Vcgencmd:
     def runcmd(self, cmd):
         return subprocess.check_output(cmd.split(), stderr=subprocess.PIPE).decode("utf-8")
 
-    def run(self):
+    def stdout(self):
         promList = self.promList()
         for i in promList:
             print(i)
-
 
     def promList(self):
         promList=[]
 
         #-------------------------------------------------------------------------------------
+        #vcgencmd_info
 
         prom = 'vcgencmd_info{version="'+str(__version__)+'"} 1'
         promList.append(prom)
@@ -347,7 +347,7 @@ def main():
             version = Prometheus_Vcgencmd().version()
             print(version)
     else:
-        run = Prometheus_Vcgencmd().run()
+        stdout = Prometheus_Vcgencmd().stdout()
 
 if __name__ == "__main__":
     sys.exit(main())

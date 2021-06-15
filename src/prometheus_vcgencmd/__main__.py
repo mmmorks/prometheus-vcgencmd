@@ -12,7 +12,7 @@ def main():
             version = Prometheus_Vcgencmd().version()
             print(version)
     else:
-        run = Prometheus_Vcgencmd().run()
+        stdout = Prometheus_Vcgencmd().stdout()
 
 if __name__ == "__main__":
     sys.exit(main())
