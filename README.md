@@ -1,4 +1,3 @@
-
 # prometheus-vcgencmd
 
 prometheus raspberry pi temperature and voltages
@@ -13,6 +12,12 @@ prometheus-vcgencmd exports the [vcgencmd](https://www.raspberrypi.org/documenta
 
 https://en.wikipedia.org/wiki/Linux  
 https://en.wikipedia.org/wiki/Raspberry_Pi  
+
+---
+```
+vcgencmd_measure_temp{scale="Celsius"} 47.8
+```
+
 
 ---
 
