@@ -1,16 +1,102 @@
+# prometheus-vcgencmd  
 
-# prometheus-vcgencmd
+prometheus-vcgencmd exports the command [vcgencmd](https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md) in prometheus format.  [Raspberry pi](https://en.wikipedia.org/wiki/Raspberry_Pi) devices have temperature and voltage sensors on their [SBC](https://en.wikipedia.org/wiki/Single-board_computer).  Use prometheus-vcgencmd to have prometheus node_exporter pickup your raspberry pi temperature and volts readings.  You will have to install the 'vcgencmd' on your raspberry pi (install libraspberrypi-bin).
+
+>Note: linux only.
+>>raspberry pi only
+---
+
+### requirements
+```
+libraspberrypi-bin
+```
+requires: /usr/bin/vcgencmd
 
 ---    
 
-### pip install  
+### pip install  prometheus-vcgencmd
 ```
 pip install prometheus-vcgencmd
 ```
+provides command line command tool:
 ```
-prometheus-vcgencmd
+prometheus-vcgencmd  
 ``` 
 https://pypi.org/project/prometheus-vcgencmd    
+
+### clone and run src
+
+https://gitlab.com/krink/prometheus-vcgencmd
+```
+git clone https://gitlab.com/krink/prometheus-vcgencmd.git
+python3 prometheus-vcgencmd/src/prometheus_vcgencmd/prometheus_vcgencmd.py
+```
+---
+
+### command line prometheus-vcgencmd  
+vcgencmd command requires root privileges  
+```
+user@pi4:~$ sudo prometheus-vcgencmd
+vcgencmd_info{version="0.0.0-1"} 1
+vcgencmd_version{date="Jan  8 2021 14:33:35",copyright="Copyright (c) 2012 Broadcom",version="194a85abd768c7334bbadc3f1911c10a7d18ed14"} 1
+vcgencmd_get_camera{supported="0"} 0
+vcgencmd_get_throttled{bit="0x0"} 1
+vcgencmd_measure_temp{scale="Celsius"} 47.8
+vcgencmd_measure_volts_core{description="VC4 core voltage"} 1.3000
+vcgencmd_measure_volts_sdram_c{description=""} 1.2000
+vcgencmd_measure_volts_sdram_i{description=""} 1.2000
+vcgencmd_measure_volts_sdram_p{description=""} 1.2250
+vcgencmd_display_power{description="display power state id"} 0
+vcgencmd_get_mem_arm{unit="Mbytes"} 948
+vcgencmd_get_mem_gpu{unit="Mbytes"} 76
+vcgencmd_mem_oom_events{} 0
+vcgencmd_mem_oom_lifetime{unit="Mbytes"} 0
+vcgencmd_mem_oom_total_time{unit="ms"} 0
+vcgencmd_mem_oom_max_time{unit="ms"} 0
+vcgencmd_mem_reloc_stats_alloc_failures{} 0
+vcgencmd_mem_reloc_stats_compactions{} 0
+vcgencmd_mem_reloc_stats_legacy_block_fails{} 0
+vcgencmd_measure_clock_arm{unit="frequency(48)"} 900000000
+vcgencmd_measure_clock_core{unit="frequency(1)"} 400000000
+vcgencmd_measure_clock_h264{unit="frequency(28)"} 0
+vcgencmd_measure_clock_isp{unit="frequency(45)"} 0
+vcgencmd_measure_clock_v3d{unit="frequency(46)"} 275000000
+vcgencmd_measure_clock_uart{unit="frequency(22)"} 48000000
+vcgencmd_measure_clock_pwm{unit="frequency(25)"} 0
+vcgencmd_measure_clock_emmc{unit="frequency(50)"} 200000000
+vcgencmd_measure_clock_pixel{unit="frequency(29)"} 338000
+vcgencmd_measure_clock_vec{unit="frequency(10)"} 108000000
+vcgencmd_measure_clock_hdmi{unit="frequency(0)"} 0
+vcgencmd_measure_clock_dpi{unit="frequency(4)"} 0
+vcgencmd_get_lcd_info{info="720 480 24"} 0
+vcgencmd_hdmi_timings{info="0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0"} 1
+vcgencmd_read_ring_osc_speed{unit="MHz"} 3.453
+vcgencmd_read_ring_osc_volts{unit="Volts"} 1.3000
+vcgencmd_read_ring_osc_temperature{scale="Celsius"} 47.2
+user@pi4:~$
+```
+---
+
+### set as a crontab for prometheus node_exorter to pickup  
+```
+*/5 * * * * prometheus-vcgencmd >/var/lib/prometheus/node-exporter/vcgencmd.prom
+```
+you can download the prometheus node_exporter from [prometheus.io](https://prometheus.io/).  The prometheus node_exporter will pickup properly formatted prometheus files ending in a ".prom" file extension.  Any files that resides in the --collector.textfile.directory with a .prom file extension is parsed automatically.
+
+---
+
+### run as a python module
+```
+python3 -m prometheus_vcgencmd
+```
+---
+### run in python shell
+```
+import prometheus_vcgencmd
+prometheus_vcgencmd.Prometheus_Vcgencmd().run()
+```
+---
+
 
 
 

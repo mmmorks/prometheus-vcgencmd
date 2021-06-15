@@ -3,19 +3,17 @@
 
 """name.__main__: executed when this directory is called as script."""
 
-#from .server import main
-#main()
-
-
 from .prometheus_vcgencmd import Prometheus_Vcgencmd
 import sys
 
-
 def main():
-	out = Prometheus_Vcgencmd().version()
-	print(out)
+    if sys.argv[1:]:
+        if sys.argv[1] == '--version':
+            version = Prometheus_Vcgencmd().version()
+            print(version)
+    else:
+        run = Prometheus_Vcgencmd().run()
 
 if __name__ == "__main__":
-	sys.exit(main())
-
+    sys.exit(main())
 
