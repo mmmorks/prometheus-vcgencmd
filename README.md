@@ -8,7 +8,8 @@ prometheus-vcgencmd exports the [vcgencmd](https://www.raspberrypi.org/documenta
 >Linux only
 >>Raspberry Pi only
 
-[![Python 3.0](https://img.shields.io/badge/python-3.0-blue.svg)](https://www.python.org/downloads/release/python-300/)
+[![Python 3.0](https://img.shields.io/badge/python-3.0-blue.svg)](https://www.python.org/downloads/release/python-300/)  
+[![Package Version](https://img.shields.io/pypi/v/prometheus-vcgencmd.svg)](https://pypi.python.org/pypi/prometheus-vcgencmd/)  
 
 https://en.wikipedia.org/wiki/Linux  
 https://en.wikipedia.org/wiki/Raspberry_Pi  
