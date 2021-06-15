@@ -1,30 +1,29 @@
+
 # prometheus-vcgencmd
 
 prometheus raspberry pi temperature and voltages
 
 ---
-prometheus-vcgencmd exports the [vcgencmd](https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md) command in prometheus format.  [Raspberry pi](https://en.wikipedia.org/wiki/Raspberry_Pi) devices have temperature and voltage sensors on their [SBC](https://en.wikipedia.org/wiki/Single-board_computer).  Use prometheus-vcgencmd and prometheus node_exporter to pickup your raspberry pi temperature and voltage readings.  You will have to install the 'vcgencmd' on your raspberry pi (install libraspberrypi-bin).
+prometheus-vcgencmd exports the [vcgencmd](https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md) command in prometheus format.  [Raspberry pi](https://en.wikipedia.org/wiki/Raspberry_Pi) devices have temperature and voltage sensors on their [SBC](https://en.wikipedia.org/wiki/Single-board_computer).  Use prometheus-vcgencmd and prometheus node_exporter to pickup your raspberry pi temperature and voltage readings.  You will have to install the **vcgencmd** command on your raspberry pi device (libraspberrypi-bin).
 
 >Linux only
 >>Raspberry Pi only
 
+[![Python 3.0](https://img.shields.io/badge/python-3.0-blue.svg)](https://www.python.org/downloads/release/python-300/)
 
 https://en.wikipedia.org/wiki/Linux  
 https://en.wikipedia.org/wiki/Raspberry_Pi  
 
 ---
-### requires a raspberry pi device
-```
-libraspberrypi-bin
-```
----
 
 ### requires a raspberry pi device
 ```
 libraspberrypi-bin
 ```
-requires: /usr/bin/vcgencmd
-
+requires: */usr/bin/vcgencmd*
+```
+apt-get install libraspberrypi-bin
+```
 ---
 
 ### pip install  prometheus-vcgencmd
@@ -37,19 +36,20 @@ prometheus-vcgencmd
 ```
 https://pypi.org/project/prometheus-vcgencmd
 
+---
 ### clone and run via src
-
-https://gitlab.com/krink/prometheus-vcgencmd
 ```
 git clone https://gitlab.com/krink/prometheus-vcgencmd.git
 python3 prometheus-vcgencmd/src/prometheus_vcgencmd/prometheus_vcgencmd.py
 ```
+https://gitlab.com/krink/prometheus-vcgencmd
+
 ---
 
 ### command line prometheus-vcgencmd
-the vcgencmd command requires root privileges
+the *vcgencmd* command requires root privileges
 ```
-user@pi4:~$ sudo prometheus-vcgencmd
+user@pi3:~$ sudo prometheus-vcgencmd
 vcgencmd_info{version="0.0.0-1"} 1
 vcgencmd_version{date="Jan  8 2021 14:33:35",copyright="Copyright (c) 2012 Broadcom",version="194a85abd768c7334bbadc3f1911c10a7d18ed14"} 1
 vcgencmd_get_camera{supported="0"} 0
@@ -86,7 +86,7 @@ vcgencmd_hdmi_timings{info="0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0"} 1
 vcgencmd_read_ring_osc_speed{unit="MHz"} 3.453
 vcgencmd_read_ring_osc_volts{unit="Volts"} 1.3000
 vcgencmd_read_ring_osc_temperature{scale="Celsius"} 47.2
-user@pi4:~$
+user@pi3:~$
 ```
 ---
 
@@ -94,7 +94,7 @@ user@pi4:~$
 ```
 */5 * * * * prometheus-vcgencmd >/var/lib/prometheus/node-exporter/vcgencmd.prom
 ```
-you can download the prometheus node_exporter from [prometheus.io](https://prometheus.io/).  Prometheus node_exporter can pickup properly formatted prometheus files ending with a ".prom" file extension.  Any file that resides in the --collector.textfile.directory with a .prom file extension is parsed automatically by [node_exporter](https://github.com/prometheus/node_exporter) Textfile Collector.
+you can download the prometheus node_exporter from [prometheus.io](https://prometheus.io/) or install via package "apt-get install prometheus-node-exporter"  Prometheus node_exporter can pickup properly formatted prometheus files ending with a ".prom" file extension.  Any file that resides in the '--collector.textfile.directory=' with a .prom file extension is parsed automatically.  [node_exporter](https://github.com/prometheus/node_exporter) Textfile Collector.
 
 ---
 
@@ -110,4 +110,11 @@ prometheus_vcgencmd.Prometheus_Vcgencmd().run()
 ```
 ---
 
+### works on
+tested and works on *"cat /proc/cpuinfo"*
+```
+Model		: Raspberry Pi 4 Model B Rev 1.4
+Model		: Raspberry Pi 3 Model B Rev 1.2
+
+```
 
