@@ -97,7 +97,7 @@ user@pi3:~$
 
 ### set as a crontab for prometheus node_exorter to pickup
 ```
-*/5 * * * * prometheus-vcgencmd >/var/lib/prometheus/node-exporter/vcgencmd.prom
+*/5 * * * * /usr/local/bin/prometheus-vcgencmd >/var/lib/prometheus/node-exporter/vcgencmd.prom
 ```
 you can download the prometheus node_exporter from [prometheus.io](https://prometheus.io/) or install via package "apt-get install prometheus-node-exporter"  Prometheus node_exporter can pickup properly formatted prometheus files ending with a ".prom" file extension.  Any file that resides in the '--collector.textfile.directory=' with a .prom file extension is parsed automatically.  [node_exporter](https://github.com/prometheus/node_exporter) Textfile Collector.
 
