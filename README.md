@@ -110,8 +110,9 @@ python3 -m prometheus_vcgencmd
 ---
 ### run in python shell
 ```
-import prometheus_vcgencmd
-prometheus_vcgencmd.Prometheus_Vcgencmd().stdout()
+$ python3
+>>> import prometheus_vcgencmd
+>>> prometheus_vcgencmd.Prometheus_Vcgencmd().stdout()
 ```
 ---
 
