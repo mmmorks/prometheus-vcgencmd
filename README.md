@@ -3,7 +3,7 @@
 prometheus raspberry pi vcgencmd
 
 ---
-prometheus-vcgencmd exports the [vcgencmd](https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md) command in prometheus format. The vcgencmd command is specific to [Raspberry pi](https://en.wikipedia.org/wiki/Raspberry_Pi) devices.  Use prometheus-vcgencmd and prometheus node_exporter to pickup your raspberry pi vcgencmd readings.  You will have to install the **vcgencmd** command on your raspberry pi device (libraspberrypi-bin).
+prometheus-vcgencmd exports the [vcgencmd](https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md) command in prometheus format. vcgencmd is a command line utility that can get various pieces of information from the VideoCore GPU on a [Raspberry pi](https://en.wikipedia.org/wiki/Raspberry_Pi) device.  Use prometheus-vcgencmd and prometheus node_exporter to pickup your raspberry pi vcgencmd readings.  You will have to install the **vcgencmd** command on your raspberry pi device (libraspberrypi-bin).
 
 >Linux only
 >>Raspberry Pi only
