@@ -1,4 +1,3 @@
-
 # prometheus-vcgencmd
 
 prometheus raspberry pi temperature and voltages
@@ -7,9 +6,11 @@ prometheus raspberry pi temperature and voltages
 prometheus-vcgencmd exports the [vcgencmd](https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md) command in prometheus format.  [Raspberry pi](https://en.wikipedia.org/wiki/Raspberry_Pi) devices have temperature and voltage sensors on their [SBC](https://en.wikipedia.org/wiki/Single-board_computer).  Use prometheus-vcgencmd and prometheus node_exporter to pickup your raspberry pi temperature and voltage readings.  You will have to install the 'vcgencmd' on your raspberry pi (install libraspberrypi-bin).
 
 >Linux only
->https://en.wikipedia.org/wiki/Linux
 >>Raspberry Pi only
->>https://en.wikipedia.org/wiki/Raspberry_Pi
+
+
+https://en.wikipedia.org/wiki/Linux  
+https://en.wikipedia.org/wiki/Raspberry_Pi  
 
 ---
 ### requires a raspberry pi device
