@@ -297,7 +297,7 @@ def create_dashboard() -> Dashboard:
                 "{{metric}}"
             ),
             unit="short",
-            size=(6, 12),
+            size=Size.HALF,
             min_value=0
         ))
 
@@ -308,7 +308,7 @@ def create_dashboard() -> Dashboard:
             "Ring oscillator frequency over time",
             prom_query(f'vcgencmd_read_ring_osc_speed{{instance="$instance"}}', "Ring Osc"),
             unit="hertz",
-            size=Size.FULL,
+            size=Size.HALF,
             min_value=0
         ))
 
@@ -369,11 +369,18 @@ if __name__ == "__main__":
     dashboard = create_dashboard().build()
     json_str = encoder.JSONEncoder(sort_keys=True, indent=2).encode(dashboard)
 
-    # Parse and modify to disable gradient effects on gauges
+    # Parse and modify dashboard
     dashboard_dict = json.loads(json_str)
-    for panel in dashboard_dict.get("panels", []):
+    for idx, panel in enumerate(dashboard_dict.get("panels", []), start=1):
+        # Add explicit panel IDs for stability
+        panel["id"] = idx
+
+        # Remove null options fields (SDK artifact)
+        if panel.get("options") is None:
+            del panel["options"]
+
+        # Disable gradient effects on gauges
         if panel.get("type") == "gauge":
-            # Disable effects.gradient at panel level (this is the key setting)
             if "options" not in panel:
                 panel["options"] = {}
             if "effects" not in panel["options"]:
