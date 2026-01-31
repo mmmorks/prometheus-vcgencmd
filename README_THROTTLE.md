@@ -116,6 +116,60 @@ vcgencmd_throttle_throttled_now > 0
 
 1.1.0-throttle-bits
 
+## Grafana Dashboard
+
+### Using the Pre-generated Dashboard
+
+Import the pre-generated dashboard JSON:
+```bash
+# The dashboard JSON is ready to import into Grafana
+cat raspberry-pi-vcgencmd-dashboard.json
+```
+
+### Generating the Dashboard
+
+The dashboard is generated using a Python script with the Grafana Foundation SDK:
+
+```bash
+# Generate the dashboard JSON
+./generate-dashboard.py > raspberry-pi-vcgencmd-dashboard.json
+```
+
+The generator script (`generate-dashboard.py`) uses `uv` for dependency management and runs without requiring a virtual environment. It automatically installs the `grafana_foundation_sdk` package when executed.
+
+### Dashboard Features
+
+The generated dashboard includes 31 comprehensive panels organized into 10 rows:
+
+**Temperature & Voltage (8 panels):**
+- CPU temperature gauge (0-85°C with green/yellow/orange/red thresholds) + timeseries
+- Core voltage gauge (1.0-1.4V) + timeseries
+- SDRAM voltages (C/I/P) combined timeseries
+- Ring oscillator temperature/voltage/speed gauges + timeseries (alternate sensor validation)
+
+**Clock Frequencies (6 panels):**
+- ARM CPU clock gauge (0-1500 MHz with thresholds) + main clocks timeseries
+- Core GPU clock gauge (0-500 MHz)
+- V3D (3D GPU) clock gauge
+- Peripheral clocks timeseries (H264 encoder, EMMC, HDMI, VEC, ISP, UART)
+
+**Memory (6 panels):**
+- ARM and GPU memory allocation gauges + timeseries
+- OOM (out-of-memory) events counter
+- Memory allocation failures counter
+- Memory compaction events counter
+- OOM lifetime and timing statistics timeseries
+
+**Throttle Status (10 panels):**
+- Current status indicators (NOW): Undervoltage, Frequency capping, Throttling, Soft temp limit
+- Historical indicators (Occurred since boot) for all 4 conditions
+- Timeseries charts for both current and historical status
+
+**What's NOT Included:**
+Static/informational metrics are excluded (version info, camera detection, LCD info, HDMI timings) as they don't benefit from time-series visualization.
+
+All panels use simple PromQL queries against the individual throttle bit metrics (0 or 1 values) for easy graphing and alerting.
+
 ## Credits
 
 Based on [prometheus-vcgencmd](https://gitlab.com/krink/prometheus-vcgencmd) by Karl Rink.
