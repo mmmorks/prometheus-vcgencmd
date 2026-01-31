@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-__version__='1.0.0'
+__version__='1.1.0-throttle-bits'
 
 import sys
 import subprocess
@@ -73,9 +73,35 @@ class Prometheus_Vcgencmd:
         try:
             get_throttled = self.runcmd('vcgencmd get_throttled').rstrip('\n')
             throttledstr = get_throttled.split('=')
-            throttled = throttledstr[1]
-            prom = 'vcgencmd_get_throttled{bit="'+str(throttled)+'"} 1'
+            throttled_hex = throttledstr[1]
+
+            # Keep original metric for backwards compatibility
+            prom = 'vcgencmd_get_throttled{bit="'+str(throttled_hex)+'"} 1'
             promList.append(prom)
+
+            # Convert hex string to integer
+            throttled_int = int(throttled_hex, 16)
+
+            # Define current status bit mappings
+            current_bits = {
+                0x1: 'vcgencmd_throttle_undervoltage',
+                0x2: 'vcgencmd_throttle_freq_capped',
+                0x4: 'vcgencmd_throttle_throttled',
+                0x8: 'vcgencmd_throttle_soft_temp_limit',
+            }
+
+            # Build complete throttle bit mappings (current + historical)
+            throttle_bits = {}
+            for bit, name in current_bits.items():
+                throttle_bits[bit] = f'{name}_now'
+                throttle_bits[bit << 16] = f'{name}_occurred'
+
+            # Parse and output individual throttle bit metrics
+            for bit_mask, metric_name in throttle_bits.items():
+                value = 1 if (throttled_int & bit_mask) else 0
+                prom = f'{metric_name} {value}'
+                promList.append(prom)
+
         except subprocess.CalledProcessError as e:
             e = 'VCHI initialization failed'
             prom = 'vcgencmd_get_throttled_error{error="'+str(e)+'"} 0'

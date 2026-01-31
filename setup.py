@@ -10,8 +10,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="prometheus-vcgencmd",
-    version="1.0.0",
-    author="Karl Rink",
+    version="1.1.0",
+    author="Karl Rink (modified)",
     author_email="karl@rink.us",
     description="prometheus-vcgencmd",
     long_description=long_description,
